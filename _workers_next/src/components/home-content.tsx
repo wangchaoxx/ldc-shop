@@ -199,7 +199,7 @@ export function HomeContent({
                                 <CheckInButton
                                     enabled={checkinEnabled}
                                     showCheckedInLabel
-                                    className="hidden md:flex"
+                                    className="flex"
                                 />
                             )}
                             {typeof visitorCount === "number" && (

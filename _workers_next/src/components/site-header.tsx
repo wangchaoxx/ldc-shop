@@ -16,7 +16,6 @@ import { HeaderLogo, HeaderNav, HeaderSearch, HeaderUserMenuItems, HeaderUnreadB
 import { ModeToggle } from "@/components/mode-toggle"
 import { getSetting, recordLoginUser, getUserUnreadNotificationCount, getLoginUserDesktopNotificationsEnabled } from "@/lib/db/queries"
 import { isRegistryEnabled } from "@/lib/registry"
-import { CheckInButton } from "@/components/checkin-button"
 
 export async function SiteHeader() {
     const session = await auth()
@@ -42,14 +41,6 @@ export async function SiteHeader() {
     } catch {
         shopNameOverride = null
         shopLogoVersion = null
-    }
-
-    let checkinEnabled = true
-    try {
-        const v = await getSetting('checkin_enabled')
-        checkinEnabled = v !== 'false'
-    } catch {
-        checkinEnabled = true
     }
 
     const registryEnabled = isRegistryEnabled()
@@ -110,22 +101,18 @@ export async function SiteHeader() {
                                         </Avatar>
                                     </Button>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56" align="end" forceMount>
-                                    <DropdownMenuLabel className="font-normal">
-                                        <div className="flex flex-col space-y-1">
-                                            <p className="text-sm font-medium leading-none">{user.name}</p>
-                                            <p className="text-xs leading-none text-muted-foreground">ID: {user.id}</p>
-                                        </div>
-                                    </DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <div className="px-2 py-1">
-                                        <CheckInButton enabled={checkinEnabled} />
-                                    </div>
-                                    <DropdownMenuSeparator />
-                                    <HeaderUserMenuItems isAdmin={isAdmin} showNav={showNavigator} />
-                                    <DropdownMenuSeparator />
-                                    <SignOutButton />
-                                </DropdownMenuContent>
+                                    <DropdownMenuContent className="w-56" align="end" forceMount>
+                                        <DropdownMenuLabel className="font-normal">
+                                            <div className="flex flex-col space-y-1">
+                                                <p className="text-sm font-medium leading-none">{user.name}</p>
+                                                <p className="text-xs leading-none text-muted-foreground">ID: {user.id}</p>
+                                            </div>
+                                        </DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <HeaderUserMenuItems isAdmin={isAdmin} showNav={showNavigator} />
+                                        <DropdownMenuSeparator />
+                                        <SignOutButton />
+                                    </DropdownMenuContent>
                             </DropdownMenu>
                         ) : (
                             <SignInButton />
